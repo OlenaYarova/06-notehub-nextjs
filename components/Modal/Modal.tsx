@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { useEffect } from "react";
-import css from "./modal.module.css"
+import css from "@/components/Modal/Modal.module.css"
 
 interface ModalProps{
     onClose: () => void;

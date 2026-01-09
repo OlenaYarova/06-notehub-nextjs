@@ -44,3 +44,10 @@ export async function deleteNote(id: string): Promise<Note> {
     const { data } = await axiosInstance.delete<Note>(`/notes/${id}`);
     return data;
 }
+
+
+
+export async function fetchNoteById(id: Note['id']) {
+    const { data } = await axiosInstance.get<Note>(`/notes/${id}`);
+    return data;
+}

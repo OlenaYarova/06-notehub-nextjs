@@ -1,5 +1,5 @@
 import css from "../Footer/Footer.module.css"
-import Link from "next/link";
+// import Link from "next/link";
 
 
 export default function Header() {
@@ -8,7 +8,7 @@ export default function Header() {
   <div className={css.content}>
     <p>© {new Date().getFullYear()} NoteHub. All rights reserved.</p>
     <div className={css.wrap}>
-      <p>Developer: your name</p>
+      <p>Developer:Olena Yarova</p>
       <p>
         Contact us:
         <a href="mailto:student@notehub.app">student@notehub.app</a>

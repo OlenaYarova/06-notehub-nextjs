@@ -1,11 +1,27 @@
 import { fetchNotes } from "@/lib/api";
+import NotesClient from "./Notes.client";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient
+} from "@tanstack/react-query";
 
-const Notes = async () => {
-	// 3. Виконуємо запит
-  const notes = await fetchNotes();
-  console.log("notes", notes);
-
-  return <div>Notes page</div>;
+interface NoteProps{
+  params: Promise<{ id: string }>;
 }
 
-export default Notes;
+export default async function NotesPages({ params }: NoteProps) {
+  const { id } = await params;
+  const queryClient = new QueryClient();
+
+   await queryClient.prefetchQuery({
+    queryKey: ["notes",1, ''],
+    queryFn:()=> fetchNotes(1, ''),
+  });
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <NotesClient />
+    </HydrationBoundary>
+  );
+    
+}
