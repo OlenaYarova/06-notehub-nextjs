@@ -11,11 +11,15 @@ import {useDebouncedCallback} from 'use-debounce'
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 
+type NotesClientsProps={
+    page: number;
+    query: string;
+  
+}
 
-
-export default function NotesClient() {
-	const [page, setPage] = useState(1);
-	const [query, setQuery] = useState('');
+export default function NotesClient({page, query}: NotesClientsProps) {
+	const [currentPage, setCurrentPage] = useState(page);
+	const [currentQuery, setCurrentQuery] = useState(query);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	
 function openModal(): void{
@@ -26,8 +30,8 @@ function openModal(): void{
 }
 
 	const { data, isSuccess } = useQuery({
-		queryKey: ["notes", page, query],
-		queryFn: () => fetchNotes(page, query),
+		queryKey: ["notes", currentPage, currentQuery],
+		queryFn: () => fetchNotes(currentPage, currentQuery),
 		placeholderData: keepPreviousData,
 		refetchOnMount:false,
 	})
@@ -45,8 +49,8 @@ function openModal(): void{
 	
 	const handleChangeQuery = useDebouncedCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
-			setPage(1),
-				setQuery(event.target.value.trim())
+			setCurrentPage(1),
+			setCurrentQuery(event.target.value.trim())
 		}, 1000
 	);
 	
@@ -60,7 +64,7 @@ function openModal(): void{
 						<Pagination
 							totalPages={totalPages}
 							page={page}
-							onSetPage={setPage}
+							onSetPage={setCurrentPage}
 						/>
 					
 					)}
