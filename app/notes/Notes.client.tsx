@@ -31,9 +31,10 @@ function openModal(): void{
 
 	const { data, isSuccess } = useQuery({
 		queryKey: ["notes", currentPage, currentQuery],
-		queryFn: () => fetchNotes(currentPage, currentQuery),
+		queryFn: () => fetchNotes(currentPage, currentQuery.trim()),
 		placeholderData: keepPreviousData,
-		refetchOnMount:false,
+		refetchOnMount: false,
+		
 	})
 
 	useEffect(() => {
@@ -50,7 +51,7 @@ function openModal(): void{
 	const handleChangeQuery = useDebouncedCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
 			setCurrentPage(1),
-			setCurrentQuery(event.target.value.trim())
+			setCurrentQuery(event.target.value)
 		}, 1000
 	);
 	
@@ -63,7 +64,7 @@ function openModal(): void{
 					(
 						<Pagination
 							totalPages={totalPages}
-							page={page}
+							page={currentPage}
 							onSetPage={setCurrentPage}
 						/>
 					
